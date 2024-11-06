@@ -69,6 +69,18 @@ class RedBlackTree():
 
 # TODO: Task 1.
 #   lookup(self,key)
+def contains(x, k):
+    if x is None:
+        return False
+    elif x.key == k:
+            return True
+    elif k < x.key:
+        return contains(x.left, k)
+    else:
+        return contains(x.right, k)
+
+def lookup(self, key):
+
 
 
 # TODO: Task 2.
