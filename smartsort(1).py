@@ -101,8 +101,7 @@ def isWithinRun(Q, i, j):
 
 def smartMergeSort(A,B,Q,m,n):
     if isWithinRun(Q, m, n):
-        return 
-    # test
+        return
     if comp(n-m, insertSortThreshold):
         insertSort(A, m, n)
         return
