@@ -20,7 +20,7 @@ sortedRunThreshold = 10
 
 # TODO: Task 1. Hybrid Merge/Insert Sort
 def insertSort(A,m,n):
-    for i in range(m, n):
+    for i in range(m, n-1):
         x = A[i]
         j = i-1
         while (comp(0, j)) and (comp(x, A[j])):
