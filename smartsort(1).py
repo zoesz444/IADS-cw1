@@ -18,13 +18,18 @@ insertSortThreshold = 10
 sortedRunThreshold = 10
 
 def insertSort(A,m,n):
-    for i in range(m + 1, n):
+    for i in range(m+1, n):
         x = A[i]
         j = i - 1
-        while (comp(m, j)) and (comp(x, A[j])):
+        while m <= j and (comp(x, A[j])):
             A[j + 1] = A[j]
             j -= 1
         A[j + 1] = x
+
+mylist = [2,4,7,3,6,1,9]
+insertSort(mylist, 0, len(mylist) - 1)
+print(mylist)
+
 
 def merge(C,D,m,p,n):
     left = m # beginning of left half
@@ -47,11 +52,6 @@ def merge(C,D,m,p,n):
         D[new] = C[right]
         right += 1
         new += 1
-
-mylist=[2,5,6,9,10,11,13,1,3,4,7,8]
-newlist = [0,0,0,0,0,0,0,0,0,0,0,0]
-merge(mylist, newlist, 0, 7, len(mylist))
-print(newlist)
 
 def greenMergeSort(A,B,m,n):
     if comp(n-m, insertSortThreshold):
