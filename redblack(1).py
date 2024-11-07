@@ -7,6 +7,7 @@
 
 # Provided code:
 from enum import Enum
+from random import sample
 
 Colour = Enum('Colour', ['Red', 'Black'])
 Red, Black = Colour.Red, Colour.Black
@@ -120,27 +121,24 @@ class RedBlackTree():
         return None
 
     def tryRedUncle(self):
-        x = self.stack.pop()
-        x_dir = self.stack.pop()
-        parent = self.stack.pop()
-        grandparent_dir = self.stack.pop()
-        grandparent = self.stack.pop()
+        if len(self.stack) < 5:
+            return False
+
+        x = self.stack[-1]
+        parent = self.stack[-3]
+        grandparent_dir = self.stack[-4]
+        grandparent = self.stack[-5]
         uncle_dir = opposite(grandparent_dir)
         uncle = grandparent.getChild(uncle_dir)
         if parent.colour == Red and uncle and uncle.colour == Red and x.colour == Red:
             parent.colour, uncle.colour, grandparent.colour = Black, Black, Red
-            self.stack.append(grandparent)
-            self.stack.append(grandparent_dir)
-            self.stack.append(parent)
-            self.stack.append(x_dir)
-            self.stack.append(x)
+            print(self.showStack())
+            self.stack.pop()
+            self.stack.pop()
+            self.stack.pop()
+            self.stack.pop()
             return True
         else:
-            self.stack.append(grandparent)
-            self.stack.append(grandparent_dir)
-            self.stack.append(parent)
-            self.stack.append(x_dir)
-            self.stack.append(x)
             return False
 
 
@@ -149,8 +147,9 @@ class RedBlackTree():
             pass
 
 
-    # Provided code to support Task 4: # inspect subtree down to the next level of blacks
+    # Provided code to support Task 4:
     def toNextBlackLevel(self, node):
+        # inspect subtree down to the next level of blacks
         # and return list of components (subtrees or nodes) in L-to-R order
         # (in cases of interest there will be 7 components A,a,B,b,C,c,D).
         if colourOf(node.left) == Black:  # node.left may be None
@@ -178,15 +177,24 @@ class RedBlackTree():
         b.right = c
         return b
 
-    # TODO: Task 4
+    def endgame(self):
+        if self.root.colour == Red:
+            self.root.colour = Black
 
-    #     def endgame(self):
-    #         self.repeatRedUncle()
+        comp = self.toNextBlackLevel(self.root)
 
-    #   insert(self,key,value)
+        if len(comp) >= 7:
+            self.balancedTree(comp)
+
+
+
+
+    def insert(self,key,value):
+        self.plainInsert(key,value)
+        self.repeatRedUncle()
+        self.endgame()
 
     # Provided code:
-
     # Printing tree contents
 
     def __str__(self, x):
@@ -230,11 +238,17 @@ sampleTree.root.right.colour = Red
 sampleTree.root.right.left = Node(3, 'three')
 sampleTree.root.right.left.colour = Black
 sampleTree.root.right.right = Node(6, 'six')
-sampleTree.root.right.right.colour = Black
-sampleTree.plainInsert(5, 'five')
-print(sampleTree.showStack())
+sampleTree.root.right.right.colour = Red
+sampleTree.root.right.right.left = Node(5, 'five')
+sampleTree.root.right.right.left.colour = Red
+sampleTree.root.right.right.right = Node(8, 'eight')
+sampleTree.root.right.right.right.colour = Red
 
-print(sampleTree.tryRedUncle())
+sampleTree.plainInsert(9, 'nine')
+
+sampleTree.endgame()
+
+
 
 
 # For fun: sorting algorithm using trees
