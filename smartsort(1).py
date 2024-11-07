@@ -119,14 +119,15 @@ def smartMergeSortAll(A):
     return A
 
 # 1. Justification of O(n lg n) bound.
-# 
-#
-#
-#
+# The worst case scenario is when none of the items are sorted. The first thing that must be checked is if any of the
+# items are already sorted - this takes n time. Then it splits the list into its individual components where for each
+# split of length k it checks if k is already sorted. This takes lg(n) time. As every time the list must be checked
+# for being sorted again, it takes n lg(n) time.
 # (continue as necessary)
 
 # 2. Runtime analysis for nearly-sorted inputs.
-#
+# As the isWithinRun function will not apply here, and neither will using insertSort, we just use a standard mergeSort
+# which has n lg(n) worst-case runtime.
 #
 #
 #
