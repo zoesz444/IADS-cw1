@@ -69,27 +69,79 @@ class RedBlackTree():
 
 # TODO: Task 1.
 #   lookup(self,key)
-def contains(x, k):
-    if x is None:
-        return False
-    elif x.key == k:
-            return True
-    elif k < x.key:
-        return contains(x.left, k)
-    else:
-        return contains(x.right, k)
-
-def lookup(self, key):
-
-
+    def lookup(self, key):
+        x = self.root
+        while x is not None:
+            if x.key == key:
+                return x.value
+            elif x.key < key:
+                x = x.left
+            elif x.key > key:
+                x = x.right
+        return None
 
 # TODO: Task 2.
 #   plainInsert(self,key,value)
+    def plainInsert(self, key, value):
+        # check if key already exists in tree / tree DNE
+        # if key already exists, overwrite only the value
+        # if tree DNE then root = new node
+        x = self.root
+        parent = None
+        direction = None
+        if x is None:
+            self.root = Node(key, value)
+            self.stack.append(self.root)
+            return
 
+        while True:
+            if x is None:
+                if direction == Left:
+                    parent.left = Node(key, value)
+                    parent.left.colour = Red
+                    self.stack.append(parent.left)
+                else:
+                    parent.right = Node(key, value)
+                    parent.right.colour = Red
+                    self.stack.append(parent.right)
+                break
+            elif x.key == key:
+                x.value = value
+                self.stack.append(x)
+                break
+            elif key < x.key:
+                self.stack.append(x)
+                parent = x
+                direction = Left
+                x = x.left
+                self.stack.append(direction)
+            elif key > x.key:
+                self.stack.append(x)
+                parent = x
+                direction = Right
+                x = x.right
+                self.stack.append(direction)
+        return None
 
 # TODO: Task 3.
 #   tryRedUncle(self)
 #   repeatRedUncle(self):
+    def tryRedUncle(self):
+        x = self.stack[-1]
+        parent = self.stack[-3]
+        grandparent = self.stack[-5]
+        grandparent_dir = self.stack[-4]
+        uncle_dir = opposite(grandparent_dir)
+
+        uncle = grandparent.getChild(uncle_dir)
+
+        if parent.colour == Red and uncle.colour == Red and x.colour == Red:
+            parent.colour = Black
+            uncle.colour = Black
+            grandparent.colour = Red
+            return True
+        else:
+            return False
 
 
 # Provided code to support Task 4:
@@ -174,7 +226,8 @@ sampleTree.root.right.left = Node(3,'three')
 sampleTree.root.right.left.colour = Black
 sampleTree.root.right.right = Node(6,'six')
 sampleTree.root.right.right.colour = Black
-
+sampleTree.plainInsert(5,'five')
+sampleTree.showStack()
 
 # For fun: sorting algorithm using trees
 # Will remove duplicates (not good)
