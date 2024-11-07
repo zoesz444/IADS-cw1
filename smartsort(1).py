@@ -33,12 +33,12 @@ def merge(C,D,m,p,n):
     new = m # beginning of where to put the new sorted result into D
 
     while left < p and right < n: # while both halves have items left to sort
-        if comp(C[left], C[right]): # if left is smaller than right
+        if comp(C[left], C[right]):
             D[new] = C[left] # put left into D
-            left += 1 # increment left
+            left += 1
         else:
             D[new] = C[right] # put right into D
-            right += 1 # increment right
+            right += 1
         new += 1 # move to next position in D
     while left < p: # if only left items left, add them all to D
         D[new] = C[left] 
@@ -54,6 +54,7 @@ def greenMergeSort(A,B,m,n):
     if n-m <= insertSortThreshold:
         insertSort(A, m, n)
         return
+    # otherwise use recursive mergesort
     if m <= n:
         middle = (m+n)//2
         greenMergeSort(A, B, m, middle)
@@ -73,12 +74,14 @@ def allSortedRuns(A):
     pointer = 1
     num = 0
     Q = PeekQueue()
+    # while there are still items to check
     while pointer < length:
         if comp(A[pointer-1], A[pointer]):
             pointer += 1
             num += 1
         else:
             if sortedRunThreshold <= num+1:
+                # add pair to queue
                 Q.push((pointer - num - 1, pointer))
             num = 0
             pointer += 1
@@ -94,6 +97,7 @@ def isWithinRun(Q, i, j):
 def smartMergeSort(A,B,Q,m,n):
     if isWithinRun(Q, m, n):
         return
+
     if n-m <= insertSortThreshold:
         insertSort(A, m, n)
         return
