@@ -31,7 +31,7 @@ def merge(C,D,m,p,n):
     right = p # beginning of right half
     new = m # beginning of where to put the new sorted result into D
 
-    while (comp(left, p-1)) and (comp(right, n-1)): # while both halves have items left
+    while left < p and right < n: # while both halves have items left
         if comp(C[left], C[right]): # if left is smaller than right
             D[new] = C[left] # put left into D
             left += 1 # increment left
@@ -39,16 +39,19 @@ def merge(C,D,m,p,n):
             D[new] = C[right] # put right into D
             right += 1 # increment right
         new += 1 # move to next position in D
-
-    while comp(left, p-1): # if there are still items left in the left half but not in the right half, put all of them into D
+    while left < p: # if there are still items left in the left half but not in the right half, put all of them into D
         D[new] = C[left] 
-        left += 1 
+        left += 1
         new += 1
-    
-    while comp(right, n-1): # if there are still items left in the right half but not in the left half, put all of them into D
+    while right < n: # if there are still items left in the right half but not in the left half, put all of them into D
         D[new] = C[right]
         right += 1
         new += 1
+
+mylist=[2,5,6,9,10,11,13,1,3,4,7,8]
+newlist = [0,0,0,0,0,0,0,0,0,0,0,0]
+merge(mylist, newlist, 0, 7, len(mylist))
+print(newlist)
 
 def greenMergeSort(A,B,m,n):
     if comp(n-m, insertSortThreshold):
