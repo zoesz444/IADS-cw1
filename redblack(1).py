@@ -132,7 +132,6 @@ class RedBlackTree():
         uncle = grandparent.getChild(uncle_dir)
         if parent.colour == Red and uncle and uncle.colour == Red and x.colour == Red:
             parent.colour, uncle.colour, grandparent.colour = Black, Black, Red
-            print(self.showStack())
             self.stack.pop()
             self.stack.pop()
             self.stack.pop()
