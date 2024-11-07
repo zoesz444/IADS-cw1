@@ -146,7 +146,6 @@ class RedBlackTree():
         while self.tryRedUncle():
             pass
 
-
     # Provided code to support Task 4:
     def toNextBlackLevel(self, node):
         # inspect subtree down to the next level of blacks
@@ -177,15 +176,7 @@ class RedBlackTree():
         return b
 
     def endgame(self):
-        if self.root.colour == Red:
-            self.root.colour = Black
-
-        comp = self.toNextBlackLevel(self.root)
-
-        balancedTree = RedBlackTree()
-
-        if len(comp) >= 7:
-            balancedTree.root = self.balancedTree(comp)
+        pass
 
     def insert(self,key,value):
         self.plainInsert(key,value)
