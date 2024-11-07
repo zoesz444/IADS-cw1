@@ -6,20 +6,16 @@
 # Implementation of dictionaries by red-black trees, space-saving version.
 
 # Provided code:
-
 from enum import Enum
 
 Colour = Enum('Colour', ['Red', 'Black'])
 Red, Black = Colour.Red, Colour.Black
 
-
 def colourStr(c):
     return 'R' if c == Red else 'B'
 
-
 Dir = Enum('Dir', ['Left', 'Right'])
 Left, Right = Dir.Left, Dir.Right
-
 
 def opposite(d):
     if d == Left:
@@ -27,13 +23,11 @@ def opposite(d):
     else:
         return Left
 
-
 def branchLabel(d):
     if d == Left:
         return 'l'
     else:
         return 'r'
-
 
 class Node():
 
@@ -59,15 +53,12 @@ class Node():
     def __repr__(self):
         return str(self.key) + ':' + str(self.value) + ':' + colourStr(self.colour)
 
-
 # Use None for all trivial leaf nodes
-
 def colourOf(x):
     if x is None:
         return Black
     else:
         return x.colour
-
 
 class RedBlackTree():
 
@@ -80,16 +71,17 @@ class RedBlackTree():
         while x is not None:
             if x.key == key:
                 return x.value
-            elif x.key < key:
+            elif key < x.key:
                 x = x.left
-            elif x.key > key:
+            elif key > x.key:
                 x = x.right
         return None
 
     def plainInsert(self, key, value):
-        # check if key already exists in tree / tree DNE
+        # check if key already exists in tree or if tree doesn't have any nodes
         # if key already exists, overwrite only the value
         # if tree DNE then root = new node
+
         x = self.root
         parent = None
         direction = None
