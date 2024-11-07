@@ -17,9 +17,8 @@ insertSortThreshold = 10
 
 sortedRunThreshold = 10
 
-
-# TODO: Task 1. Hybrid Merge/Insert Sort
 def insertSort(A,m,n):
+
     for i in range(m, n-1):
         x = A[i]
         j = i-1
@@ -71,8 +70,6 @@ def greenMergeSortAll(A):
     greenMergeSort(A,B,0,len(A))
     return A
 
-
-# TODO: Task 2. Detecting already sorted runs.
 def allSortedRuns(A):
     length = len(A)
 
@@ -122,9 +119,6 @@ def smartMergeSortAll(A):
     Q = allSortedRuns(A)
     smartMergeSort(A,B,Q,0,len(A))
     return A
-
-
-# TODO: Task 3. Asymptotic analysis of smartMergeSortAll
 
 # 1. Justification of O(n lg n) bound.
 # 
