@@ -162,7 +162,6 @@ class RedBlackTree():
             rightHalf = self.toNextBlackLevel(node.right)
         return leftHalf + [node] + rightHalf
 
-
     def balancedTree(self, comps):
         # build a new (balanced) subtree from list of 7 components
         [A, a, B, b, C, c, D] = comps
@@ -183,11 +182,10 @@ class RedBlackTree():
 
         comp = self.toNextBlackLevel(self.root)
 
+        balancedTree = RedBlackTree()
+
         if len(comp) >= 7:
-            self.balancedTree(comp)
-
-
-
+            balancedTree.root = self.balancedTree(comp)
 
     def insert(self,key,value):
         self.plainInsert(key,value)
