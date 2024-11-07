@@ -18,14 +18,13 @@ insertSortThreshold = 10
 sortedRunThreshold = 10
 
 def insertSort(A,m,n):
-
-    for i in range(m, n-1):
+    for i in range(m + 1, n):
         x = A[i]
-        j = i-1
-        while (comp(0, j)) and (comp(x, A[j])):
-            A[j+1] = A[j]
-            j = j-1
-        A[j+1] = x
+        j = i - 1
+        while (comp(m, j)) and (comp(x, A[j])):
+            A[j + 1] = A[j]
+            j -= 1
+        A[j + 1] = x
 
 def merge(C,D,m,p,n):
     left = m # beginning of left half
