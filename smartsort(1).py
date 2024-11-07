@@ -18,25 +18,21 @@ insertSortThreshold = 10
 sortedRunThreshold = 10
 
 def insertSort(A,m,n):
+    # start at index one as comparing to previous item
     for i in range(m+1, n):
         x = A[i]
         j = i - 1
-        while m <= j and (comp(x, A[j])):
+        while j >= m and (comp(x, A[j])):
             A[j + 1] = A[j]
             j -= 1
         A[j + 1] = x
-
-mylist = [2,4,7,3,6,1,9]
-insertSort(mylist, 0, len(mylist) - 1)
-print(mylist)
-
 
 def merge(C,D,m,p,n):
     left = m # beginning of left half
     right = p # beginning of right half
     new = m # beginning of where to put the new sorted result into D
 
-    while left < p and right < n: # while both halves have items left
+    while left < p and right < n: # while both halves have items left to sort
         if comp(C[left], C[right]): # if left is smaller than right
             D[new] = C[left] # put left into D
             left += 1 # increment left
@@ -44,20 +40,21 @@ def merge(C,D,m,p,n):
             D[new] = C[right] # put right into D
             right += 1 # increment right
         new += 1 # move to next position in D
-    while left < p: # if there are still items left in the left half but not in the right half, put all of them into D
+    while left < p: # if only left items left, add them all to D
         D[new] = C[left] 
         left += 1
         new += 1
-    while right < n: # if there are still items left in the right half but not in the left half, put all of them into D
+    while right < n: # if only right items left, add them all to D
         D[new] = C[right]
         right += 1
         new += 1
 
 def greenMergeSort(A,B,m,n):
-    if comp(n-m, insertSortThreshold):
+    # if the number of items is below the threshold use insertsort
+    if n-m <= insertSortThreshold:
         insertSort(A, m, n)
         return
-    if comp(m, n):
+    if m <= n:
         middle = (m+n)//2
         greenMergeSort(A, B, m, middle)
         greenMergeSort(A, B, middle, n)
@@ -66,7 +63,6 @@ def greenMergeSort(A,B,m,n):
             A[i] = B[i]
 
 # Provided code:
-
 def greenMergeSortAll(A):
     B = [None] * len(A)
     greenMergeSort(A,B,0,len(A))
@@ -74,18 +70,15 @@ def greenMergeSortAll(A):
 
 def allSortedRuns(A):
     length = len(A)
-
     pointer = 1
     num = 0
-
     Q = PeekQueue()
-
     while pointer < length:
         if comp(A[pointer-1], A[pointer]):
             pointer += 1
             num += 1
         else:
-            if comp(sortedRunThreshold, num+1):
+            if sortedRunThreshold <= num+1:
                 Q.push((pointer - num - 1, pointer))
             num = 0
             pointer += 1
@@ -101,16 +94,15 @@ def isWithinRun(Q, i, j):
 def smartMergeSort(A,B,Q,m,n):
     if isWithinRun(Q, m, n):
         return
-    if comp(n-m, insertSortThreshold):
+    if n-m <= insertSortThreshold:
         insertSort(A, m, n)
         return
     
-    if comp(m, n):
+    if m <= n:
         middle = (m+n)//2
         smartMergeSort(A, B, Q, m, middle)
         smartMergeSort(A, B, Q, middle, n)
         merge(A, B, m, middle, n)
-
         for i in range(m, n):
             A[i] = B[i]  
 
